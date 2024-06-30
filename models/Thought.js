@@ -1,4 +1,4 @@
-// Require Schema and model from mongoose toe nable setting up of schema
+// Require Schema and model from mongoose to enable setting up of schema
 const {Schema, model } = require('mongoose');
 // dayjs used in createdAt property in reactionSchema and thoughtSchema to format date.
 const dayjs = require('dayjs');
