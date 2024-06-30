@@ -62,7 +62,11 @@ const thoughtSchema = new Schema(
 
 // Virtual returns a count of the reactions nested document array.
 thoughtSchema.virtual('reactionCount').get(()=> {
-    return this.reactions.length;
+    try {
+        return this.reactions.length
+    } catch {
+        return 0
+    }
 });
 
 const Thought = model('thought', thoughtSchema);
