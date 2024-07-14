@@ -1,34 +1,45 @@
-# Note Taker
+# Social Network API
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Live web link - https://note-taker-q434.onrender.com/notes
+https://www.loom.com/share/16aa637bbaa849ff9923dcd70ae7cc33?sid=50a230e3-7c63-46d1-b1f9-eca5af3bb487
 
-Github repo - https://github.com/LukeHunter1991/Note_Taker
+## Description
 
- ## Description
- I created a web application where I cann add and remove notes. I did this so that I can easily track pending tasks that I need to complete and  leave myself general reminders. I did this to support  my time management as  I  juggle my time between my job and  study. I also wanted to gain a deeper understanding of bulding and deploying web apps.
+In this program I built the back end to a social media platform. This allows a user to run Get, Post, Put, and Delete routes using insomnia. This will allow a user to view, create, update and delete users, and posts called 'thoughts'. A user can also add friends to a user and reactions to a thought. I did this to gain a deeper understanding of MongoDB and Mongoose.
 
-
-## Index
-- [Installation](#installation)
-- [Usage](#usage)
 - [License](#license)
+
+- [Installation](#installation)
+
+- [Usage](#usage)
+
 - [Badges](#badges)
 
+- [Contribute](#contribute)
+
+- [Tests](#tests)
+
+## License
+
+This software is licensed under the MIT license.
+
 ## Installation
-No installation needed. This is hosted on the web.
 
-## Usage
-To record a note, simply type a title and some text to describe the task/reminder. In the top right corner two buttons will appear - 'Save Note' and 'Clear Form'. Use the clear form button to delete any text that you have input for a note, but have not yet submitted. Once you have succesfully added a title and text use the save button to record the note. It will now appear on the left hand column along with any other notes that you have saved. Todelete a note simply click the corresponding delete button.
-
-![screenshot](./images/Screenshot.png)
- 
-## License 
- This software is licensed under the MIT license.
+In order to use this program it's best to use Insomnia to make requests and receive responses.
 
 ## Badges
+
 ![badmath](https://img.shields.io/github/languages/top/lernantino/badmath)
 
-## Questions
- For any questions relating to this software, I can be contacted on github at https://github.com/LukeHunter1991 or via email at luke.hunter9@gmail.com
+## Usage
 
+A user can launch the program by typing npm start to run the application. The user will then utilise an API development platform like Insomnia to run GET/PUT/POST/DELETE routes.
+
+## Tests
+
+No tests
+
+## Contribute
+
+Please feel free to reach out if you would like to discuss collaboration.
