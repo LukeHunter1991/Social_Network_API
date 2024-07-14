@@ -3,31 +3,7 @@ const {Schema, model } = require('mongoose');
 // dayjs used in createdAt property in reactionSchema and thoughtSchema to format date.
 const dayjs = require('dayjs');
 
-const reactionSchema = new Schema(
-    {
-        reactionId: {
-            // Declares reaction Id as type ObjectId available in mongoose.
-            type: Schema.Types.ObjectId,
-            // Generates new id.
-            default: () => new mongoose.Types.ObjectId(),
-        },
-        reactionBody: {
-            type: String,
-            required: true,
-            maxLength: 280,
-        },
-        username: {
-            type: String,
-            required: true,
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now(),
-            // dayjs used to format the date object.
-            get: (createdAt) => dayjs(createdAt).format('DD/MM/YYYY hh:mm:ss'),
-        }
-    }
-)
+const Reaction = require('./Reaction');
 
 
 const thoughtSchema = new Schema(
@@ -49,14 +25,13 @@ const thoughtSchema = new Schema(
             required: true,
         },
         // reactionSchema added as a nested document.
-        reactions: [reactionSchema]
+        reactions: [Reaction]
     },
     {
-        // Used to include friendCount virtual.
+        // Used to include reactionCount virtual.
         toJSON: {
-          virtuals: true,
+        virtuals: true,
         },
-        id: false,
     }
 );
 

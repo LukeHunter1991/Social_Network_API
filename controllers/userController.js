@@ -6,7 +6,11 @@ module.exports = {
     async getUsers(_req, res) {
         try {
             // Returns an array with all users
-            const allUsers = await User.find().select('-__v');
+            const allUsers = await User.find().populate({
+                path: 'thoughts',
+                select: 'thoughtText createdAt reactions'
+            })
+            .select('-__v');
             res.json(allUsers);
         } catch (err) {
             return res.status(500).json(err);
@@ -18,7 +22,15 @@ module.exports = {
     async getSingleUser(req, res) {
         try {
             // Look up single user with userID parameter.
-            const user = await User.findOne({ _id: req.params.userId }).select('-__v');
+            const user = await User.findOne({ _id: req.params.userId }).select('-__v')
+            .populate({
+                path: 'thoughts',
+                select: 'thoughtText createdAt reactions'
+            })
+            .populate({
+                path: 'friends',
+                select: 'username'
+            });
 
             // If no result from above method, no user matches that id.
             if (!user) {
@@ -87,6 +99,58 @@ module.exports = {
             }
 
             res.json({ message: deleteMessage })
+
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
+    // Post route to add one friend to a users friend array - /api/users/:userId/friends/:friendId
+    async addFriend(req, res) {
+        try {
+            // Pull details of friend to be added.
+            // This ensures that they are a valid user before attempting to add them to the friend list.
+            const friend = await User.findOne({ _id: req.params.friendId }).select('-__v');
+
+            // If no friend, return error.
+            if (!friend) {
+                return res.send(404).json({
+                    message: 'No user found with friend details. Unable to add friend.'
+                })
+            };
+            // FInd relevant user based on id parameter.
+            const user = await User.findByIdAndUpdate(
+                req.params.userId,
+                // Add relevant user to friend array
+                { $addToSet: { friends: friend }},
+                // validate and return updated values
+                { runValidators: true, new: true }
+            );
+
+            if (!user) {
+                return res.status(404).json({
+                    message: 'User ID incorrect. Unable to add friend.'
+                })
+            };
+            res.json(['Succesfully added friend.', user]);
+
+        } catch(err) {
+            res.status(500).json(err);
+        }
+    },
+    // Delete route to remove one friend to a users friend array - /api/users/:userId/friends/:friendId
+    async deleteFriend(req, res) {
+        try {
+
+            const user = await User.findByIdAndUpdate(
+                // Find relevant user by userId parameter.
+                { _id: req.params.userId },
+                // Remove friend from that user based on friendId parameter.
+                { $pull: { friends: { $in: [{_id: req.params.friendId}] } } },
+                // Validate and return updated user.
+                { runValidators: true, new: true }
+              );
+              // Send confirmation message and updated user.
+              res.send(['Friend succesfully removed', user]);
 
         } catch (err) {
             res.status(500).json(err);
